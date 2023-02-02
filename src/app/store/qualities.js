@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import qualityService from '../services/quality.service'
+import isDutdated from '../utils/isQutdated'
 
 const qualitiesSlice = createSlice({
     name: 'qualities',
@@ -28,17 +29,9 @@ const qualitiesSlice = createSlice({
 const { actions, reducer: qualitiesReducer } = qualitiesSlice
 const { qualitiesRequested, qualitiesReceved, qualitiesRequestFiled } = actions
 
-function isDutdated(date) {
-    if (Date.now() - date > 10 * 60 * 1000) {
-        return true
-    }
-    return false
-}
-
 export const loadQualitiesList = () => async (dispatch, getState) => {
     const { lastFetch } = getState().qualities
     if (isDutdated(lastFetch)) {
-        console.log('lastFetch', lastFetch)
         dispatch(qualitiesRequested())
         try {
             const { content } = await qualityService.fetchAll()
