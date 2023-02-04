@@ -28,7 +28,7 @@ const usersSlice = createSlice({
         },
         authRequestSuccess: (state, action) => {
             state.auth = action.payload
-            state.isLoading = true
+            state.isLoggedIn = true
         },
         authRequestFailed: (state, action) => {
             state.error = action.payload
