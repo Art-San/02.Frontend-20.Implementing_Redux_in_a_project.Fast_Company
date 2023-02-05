@@ -9,7 +9,7 @@ import { getCurrentUserId } from '../store/users'
 const Users = () => {
     const params = useParams()
     const { userId, edit } = params
-    const currentUserUserId = useSelector(getCurrentUserId)
+    const currentUserUserId = useSelector(getCurrentUserId())
 
     return (
         <>
