@@ -1,58 +1,38 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React from 'react'
+import { useSelector } from 'react-redux'
 import { useParams, Redirect } from 'react-router-dom'
 import EditUserPage from '../components/page/editUserPage'
 import UserPage from '../components/page/userPage'
 import UsersListPage from '../components/page/usersListPage'
-import { useAuth } from '../hooks/useAuth'
+import UsersLoader from '../components/ui/hoc/usersLoader'
 import UserProvider from '../hooks/useUsers'
-import { getDataStatus, loadUsersList } from '../store/users'
+import { getCurrentUserId } from '../store/users'
 const Users = () => {
     const params = useParams()
     const { userId, edit } = params
-    const { currentUser } = useAuth()
-    const dataStatus = useSelector(getDataStatus())
-    const dispatch = useDispatch()
-    useEffect(() => {
-        if (!dataStatus) dispatch(loadUsersList())
-    }, [])
-    if (!dataStatus) return 'Loading'
+    const currentUserUserId = useSelector(getCurrentUserId)
+
     return (
         <>
-            <UserProvider>
-                {userId ? (
-                    edit ? (
-                        userId === currentUser._id ? (
-                            <EditUserPage />
+            <UsersLoader>
+                <UserProvider>
+                    {userId ? (
+                        edit ? (
+                            userId === currentUserUserId ? (
+                                <EditUserPage />
+                            ) : (
+                                <Redirect to={`/users/${currentUserUserId}/edit`} />
+                            )
                         ) : (
-                            <Redirect to={`/users/${currentUser._id}/edit`} />
+                            <UserPage userId={userId} />
                         )
                     ) : (
-                        <UserPage userId={userId} />
-                    )
-                ) : (
-                    <UsersListPage />
-                )}
-            </UserProvider>
+                        <UsersListPage />
+                    )}
+                </UserProvider>
+            </UsersLoader>
         </>
     )
 }
 
 export default Users
-
-// return (
-//     <>
-//         <UserProvider>
-//             {userId ? (
-//                 edit ? (
-//                     <EditUserPage />
-//                 ) : (
-//                     <UserPage userId={userId} />
-//                 )
-//             ) : (
-//                 <UsersListPage />
-//             )}
-//         </UserProvider>
-//     </>
-// )
-// }
