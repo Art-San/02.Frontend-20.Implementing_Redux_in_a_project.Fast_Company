@@ -3,7 +3,11 @@ import React, { useEffect } from 'react'
 import CommentsList, { AddCommentForm } from '../common/comments'
 import { useComments } from '../../hooks/useComments'
 import { useDispatch, useSelector } from 'react-redux'
-import { getComments, getCommentsLoadingStatus, loadCommentsList } from '../../store/comments'
+import {
+    getComments,
+    getCommentsLoadingStatus,
+    loadCommentsList
+} from '../../store/comments'
 import { useParams } from 'react-router-dom'
 
 const Comments = () => {
@@ -15,6 +19,7 @@ const Comments = () => {
     const isLoading = useSelector(getCommentsLoadingStatus())
     const { createComment, removeComment } = useComments()
     const comments = useSelector(getComments())
+
     const handleSubmit = (data) => {
         createComment(data)
     }
@@ -37,11 +42,11 @@ const Comments = () => {
                         {!isLoading ? (
                             <CommentsList
                                 comments={sortedComments}
-                                onRemove={handleRemoveComment}/>
+                                onRemove={handleRemoveComment}
+                            />
                         ) : (
                             'Loading...'
                         )}
-
                     </div>
                 </div>
             )}
