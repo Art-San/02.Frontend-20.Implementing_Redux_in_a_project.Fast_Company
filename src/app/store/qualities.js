@@ -7,7 +7,7 @@ const qualitiesSlice = createSlice({
         entities: null,
         isLoading: true,
         error: null,
-        lastFetch: null
+        lastFetch: null // Получение актуальных данных
     },
     reducers: {
         qualitiesRequested: (state) => {
@@ -15,7 +15,7 @@ const qualitiesSlice = createSlice({
         },
         qualitiesReceved: (state, action) => {
             state.entities = action.payload
-            state.lastFetch = Date.now()
+            state.lastFetch = Date.now() // Получение актуальных данных
             state.isLoading = false
         },
         qualitiesRequestFiled: (state, action) => {
@@ -28,6 +28,7 @@ const qualitiesSlice = createSlice({
 const { actions, reducer: qualitiesReducer } = qualitiesSlice
 const { qualitiesRequested, qualitiesReceved, qualitiesRequestFiled } = actions
 
+// Получение актуальных данных
 function isDutdated(date) {
     if (Date.now() - date > 10 * 60 * 1000) {
         return true
@@ -36,7 +37,7 @@ function isDutdated(date) {
 }
 
 export const loadQualitiesList = () => async (dispatch, getState) => {
-    const { lastFetch } = getState().qualities
+    const { lastFetch } = getState().qualities // Получение актуальных данных
     if (isDutdated(lastFetch)) {
         console.log('lastFetch', lastFetch)
         dispatch(qualitiesRequested())
@@ -52,7 +53,7 @@ export const loadQualitiesList = () => async (dispatch, getState) => {
 export const getQualities = () => (state) => state.qualities.entities
 export const getQualitiesLoadingStatus = () => (state) =>
     state.qualities.isLoading
-export const getQualitiesByIds = (qualitisIds) => state => {
+export const getQualitiesByIds = (qualitisIds) => (state) => {
     if (state.qualities.entities) {
         const qualitiesArray = []
         for (const qualId of qualitisIds) {
