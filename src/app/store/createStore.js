@@ -2,7 +2,7 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import qualitiesReducer from './qualities'
 
 const rootReducer = combineReducers({
-    qualities: qualitiesReducer
+    qualities: qualitiesReducer // Создаем Qualities Slice
 })
 
 export function createStore() {

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-
+// Создаем Qualities Slice
 const qualitiesSlice = createSlice({
     name: 'qualities',
     initialState: {
