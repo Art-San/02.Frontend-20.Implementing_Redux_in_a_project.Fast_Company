@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux'
 import { getUserById } from '../../../store/users'
 
 const UserPage = ({ userId }) => {
-    const user = useSelector(getUserById(userId))
+    const user = useSelector(getUserById(userId)) // Создаем actions и selectors для Users
     if (user) {
         return (
             <div className="container">

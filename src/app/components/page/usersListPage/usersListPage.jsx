@@ -7,14 +7,17 @@ import SearchStatus from '../../ui/searchStatus'
 import UserTable from '../../ui/usersTable'
 import _ from 'lodash'
 import { useAuth } from '../../../hooks/useAuth'
-import { getProfessions, getProfessionsLoadingStatus } from '../../../store/professions'
+import {
+    getProfessions,
+    getProfessionsLoadingStatus
+} from '../../../store/professions'
 import { useSelector } from 'react-redux'
 import { getUsersList } from '../../../store/users'
 
 const UsersListPage = () => {
-    const users = useSelector(getUsersList())
+    const users = useSelector(getUsersList()) // Создаем actions и selectors для Users
     const { currentUser } = useAuth()
-    const professions = useSelector((getProfessions()))
+    const professions = useSelector(getProfessions())
     const professionsLoading = useSelector(getProfessionsLoadingStatus())
     const [currentPage, setCurrentPage] = useState(1)
     const [searchQuery, setSearchQuery] = useState('')
@@ -61,18 +64,18 @@ const UsersListPage = () => {
         function filterUsers(data) {
             const filteredUsers = searchQuery
                 ? data.filter(
-                    (user) =>
-                        user.name
-                            .toLowerCase()
-                            .indexOf(searchQuery.toLowerCase()) !== -1
-                )
+                      (user) =>
+                          user.name
+                              .toLowerCase()
+                              .indexOf(searchQuery.toLowerCase()) !== -1
+                  )
                 : selectedProf
-                    ? data.filter(
-                        (user) =>
-                            JSON.stringify(user.profession) ===
-                        JSON.stringify(selectedProf)
-                    )
-                    : data
+                ? data.filter(
+                      (user) =>
+                          JSON.stringify(user.profession) ===
+                          JSON.stringify(selectedProf)
+                  )
+                : data
             return filteredUsers.filter((u) => u._id !== currentUser._id)
         }
         const filteredUsers = filterUsers(users)

@@ -21,7 +21,6 @@ const usersSlice = createSlice({
             state.isLoading = false
         }
     }
-
 })
 
 const { actions, reducer: usersReducer } = usersSlice
@@ -37,10 +36,11 @@ export const loadUsersList = () => async (dispatch, getState) => {
     }
 }
 
-export const getUsersList = () => (state) => state.users.entities
+export const getUsersList = () => (state) => state.users.entities // Создаем actions и selectors для Users
+// Создаем actions и selectors для Users
 export const getUserById = (userId) => (state) => {
     if (state.users.entities) {
-        return state.users.entities.find(u => u._id === userId)
+        return state.users.entities.find((u) => u._id === userId)
     }
 }
 
