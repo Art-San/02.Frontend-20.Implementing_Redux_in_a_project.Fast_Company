@@ -28,7 +28,7 @@ const RegisterForm = () => {
         label: q.name,
         value: q._id
     }))
-    const professions = useSelector(getProfessions())
+    const professions = useSelector(getProfessions()) // изменяем интерфейс
     const professionsList = professions.map((p) => ({
         label: p.name,
         value: p._id
