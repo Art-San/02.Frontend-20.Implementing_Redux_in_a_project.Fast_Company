@@ -1,3 +1,4 @@
+// Переносим метод регистрации в User Slice
 import axios from 'axios'
 const httpAuth = axios.create({
     baseURL: 'https://identitytoolkit.googleapis.com/v1/',

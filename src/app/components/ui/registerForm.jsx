@@ -11,7 +11,7 @@ import { getProfessions } from '../../store/professions'
 import { signUp } from '../../store/users'
 
 const RegisterForm = () => {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch() // Переносим метод регистрации в User Slice
     const [data, setData] = useState({
         email: '',
         password: '',
@@ -104,7 +104,7 @@ const RegisterForm = () => {
             qualities: data.qualities.map((q) => q.value)
         }
 
-        dispatch(signUp(newData))
+        dispatch(signUp(newData)) // Переносим метод регистрации в User Slice
     }
 
     return (
