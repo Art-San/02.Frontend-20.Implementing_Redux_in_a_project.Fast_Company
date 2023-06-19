@@ -3,7 +3,7 @@ import authService from '../services/auth.servise'
 import localStorageService from '../services/localStorage.service'
 import userService from '../services/user.service'
 import getRandomInt from '../utils/getRandomInt'
-import history from '../utils/history'
+import history from '../utils/history' // Переадресация после входа
 
 const usersSlice = createSlice({
     name: 'users',
@@ -39,7 +39,6 @@ const usersSlice = createSlice({
             state.entities.push(action.payload)
         }
     }
-
 })
 
 const { actions, reducer: usersReducer } = usersSlice
@@ -57,13 +56,14 @@ const userCreateRequested = createAction('users/userCreateRequested')
 const createUserFailed = createAction('users/userCreateRequested')
 export const signUp =
     ({ email, password, ...rest }) =>
-        async (dispatch) => {
-            dispatch(authRequested())
-            try {
-                const data = await authService.register({ email, password })
-                localStorageService.setTokens(data)
-                dispatch(authRequestSuccess({ userId: data.localId }))
-                dispatch(createUser({
+    async (dispatch) => {
+        dispatch(authRequested())
+        try {
+            const data = await authService.register({ email, password })
+            localStorageService.setTokens(data)
+            dispatch(authRequestSuccess({ userId: data.localId }))
+            dispatch(
+                createUser({
                     _id: data.localId,
                     email,
                     rate: getRandomInt(1, 5),
@@ -74,11 +74,12 @@ export const signUp =
                         .toString(36)
                         .substring(7)}.svg`,
                     ...rest
-                }))
-            } catch (error) {
-                dispatch(authRequestFailed(error.message))
-            }
+                })
+            )
+        } catch (error) {
+            dispatch(authRequestFailed(error.message))
         }
+    }
 
 function createUser(payload) {
     return async function (dispatch) {
@@ -86,7 +87,7 @@ function createUser(payload) {
         try {
             const { content } = await userService.create(payload)
             dispatch(userCreated(content))
-            history.push('/users')
+            history.push('/users') // Переадресация после входа
         } catch (error) {
             dispatch(createUserFailed(error.message))
         }
@@ -106,7 +107,7 @@ export const loadUsersList = () => async (dispatch, getState) => {
 export const getUsersList = () => (state) => state.users.entities
 export const getUserById = (userId) => (state) => {
     if (state.users.entities) {
-        return state.users.entities.find(u => u._id === userId)
+        return state.users.entities.find((u) => u._id === userId)
     }
 }
 

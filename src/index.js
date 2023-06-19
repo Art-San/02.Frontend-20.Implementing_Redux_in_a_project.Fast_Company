@@ -14,7 +14,9 @@ const store = createStore()
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
-    <Router history={history}>
+    <Router
+        history={history} // Переадресация после входа
+    >
         <React.StrictMode>
             <Provider store={store}>
                 <App />
