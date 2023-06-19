@@ -14,6 +14,7 @@ import { useDispatch } from 'react-redux'
 import { loadQualitiesList } from './store/qualities'
 
 function App() {
+    // Создаем Qualities Reducer
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(loadQualitiesList())

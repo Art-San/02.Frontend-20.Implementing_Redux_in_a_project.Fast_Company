@@ -6,9 +6,10 @@ const qualitiesSlice = createSlice({
     initialState: {
         entities: null,
         isLoading: true,
-        error: null
+        error: null // Создаем Qualities Reducer
     },
     reducers: {
+        // Создаем Qualities Reducer
         qualitiesRequested: (state) => {
             state.isLoading = true
         },
@@ -24,8 +25,9 @@ const qualitiesSlice = createSlice({
 })
 
 const { actions, reducer: qualitiesReducer } = qualitiesSlice
-const { qualitiesRequested, qualitiesReceved, qualitiesRequestFiled } = actions
+const { qualitiesRequested, qualitiesReceved, qualitiesRequestFiled } = actions // Создаем Qualities Reducer
 
+// Создаем Qualities Reducer
 export const loadQualitiesList = () => async (dispatch) => {
     dispatch(qualitiesRequested())
     try {
