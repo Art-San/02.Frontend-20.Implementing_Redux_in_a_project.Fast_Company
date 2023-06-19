@@ -31,6 +31,7 @@ const usersSlice = createSlice({
         authRequestFailed: (state, action) => {
             state.error = action.payload
         },
+        // метод создания пользователя в User Slice
         userCreated: (state, action) => {
             if (!Array.isArray(state.entities)) {
                 state.entities = []
@@ -38,7 +39,6 @@ const usersSlice = createSlice({
             state.entities.push(action.payload)
         }
     }
-
 })
 
 const { actions, reducer: usersReducer } = usersSlice
@@ -52,17 +52,19 @@ const {
 } = actions
 
 const authRequested = createAction('users/authRequested')
-const userCreateRequested = createAction('users/userCreateRequested')
-const createUserFailed = createAction('users/userCreateRequested')
+const userCreateRequested = createAction('users/userCreateRequested') // метод создания пользователя в User Slice
+const createUserFailed = createAction('users/userCreateRequested') // метод создания пользователя в User Slice
 export const signUp =
     ({ email, password, ...rest }) =>
-        async (dispatch) => {
-            dispatch(authRequested())
-            try {
-                const data = await authService.register({ email, password })
-                localStorageService.setTokens(data)
-                dispatch(authRequestSuccess({ userId: data.localId }))
-                dispatch(createUser({
+    async (dispatch) => {
+        dispatch(authRequested())
+        try {
+            const data = await authService.register({ email, password })
+            localStorageService.setTokens(data)
+            dispatch(authRequestSuccess({ userId: data.localId }))
+            dispatch(
+                createUser({
+                    // метод создания пользователя в User Slice
                     _id: data.localId,
                     email,
                     rate: getRandomInt(1, 5),
@@ -73,12 +75,13 @@ export const signUp =
                         .toString(36)
                         .substring(7)}.svg`,
                     ...rest
-                }))
-            } catch (error) {
-                dispatch(authRequestFailed(error.message))
-            }
+                })
+            )
+        } catch (error) {
+            dispatch(authRequestFailed(error.message))
         }
-
+    }
+// метод создания пользователя в User Slice
 function createUser(payload) {
     return async function (dispatch) {
         dispatch(userCreateRequested())
@@ -104,7 +107,7 @@ export const loadUsersList = () => async (dispatch, getState) => {
 export const getUsersList = () => (state) => state.users.entities
 export const getUserById = (userId) => (state) => {
     if (state.users.entities) {
-        return state.users.entities.find(u => u._id === userId)
+        return state.users.entities.find((u) => u._id === userId)
     }
 }
 
