@@ -19,7 +19,7 @@ function App() {
     useEffect(() => {
         dispatch(loadQualitiesList())
         dispatch(loadProfessionsList())
-        dispatch(loadUsersList())
+        dispatch(loadUsersList()) // Создаем Users Slice
     }, [])
     return (
         <div>

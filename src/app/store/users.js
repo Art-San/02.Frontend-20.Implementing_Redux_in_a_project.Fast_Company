@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import userService from '../services/user.service'
-
+// Создаем Users Slice
 const usersSlice = createSlice({
     name: 'users',
     initialState: {
@@ -21,7 +21,6 @@ const usersSlice = createSlice({
             state.isLoading = false
         }
     }
-
 })
 
 const { actions, reducer: usersReducer } = usersSlice
