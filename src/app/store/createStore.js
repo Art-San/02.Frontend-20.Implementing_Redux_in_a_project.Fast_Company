@@ -4,7 +4,7 @@ import qualitiesReducer from './qualities'
 
 const rootReducer = combineReducers({
     qualities: qualitiesReducer,
-    professions: professionsReducer
+    professions: professionsReducer // создали professions slice
 })
 
 export function createStore() {

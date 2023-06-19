@@ -2,6 +2,8 @@ import { createSlice } from '@reduxjs/toolkit'
 import professionService from '../services/profession.service'
 import isDutdated from '../utils/isQutdated'
 
+// создали professions slice
+
 const professionsSlice = createSlice({
     name: 'professions',
     initialState: {
@@ -27,7 +29,8 @@ const professionsSlice = createSlice({
 })
 
 const { actions, reducer: professionsReducer } = professionsSlice
-const { professionsRequested, professionsReceved, professionsRequestFiled } = actions
+const { professionsRequested, professionsReceved, professionsRequestFiled } =
+    actions
 
 export const loadProfessionsList = () => async (dispatch, getState) => {
     const { lastFetch } = getState().professions
