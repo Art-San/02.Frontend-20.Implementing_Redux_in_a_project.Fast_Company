@@ -15,6 +15,7 @@ const authService = {
         })
         return data
     },
+    // Переносим метод входа в User Slice
     logIn: async ({ email, password }) => {
         const { data } = await httpAuth.post(`accounts:signInWithPassword`, {
             email,
