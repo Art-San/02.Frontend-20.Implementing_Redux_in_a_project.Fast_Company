@@ -23,7 +23,7 @@ const RegisterForm = () => {
         licence: false
     })
     const { signUp } = useAuth()
-    const qualities = useSelector(getQualities())
+    const qualities = useSelector(getQualities()) // actions и selectors для Qualities
     const qualitiesList = qualities.map((q) => ({
         label: q.name,
         value: q._id

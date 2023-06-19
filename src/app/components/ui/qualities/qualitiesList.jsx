@@ -2,10 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Quality from './quality'
 import { useSelector } from 'react-redux'
-import { getQualitiesByIds, getQualitiesLoadingStatus } from '../../../store/qualities'
+import {
+    getQualitiesByIds,
+    getQualitiesLoadingStatus
+} from '../../../store/qualities'
 
 const QualitiesList = ({ qualities }) => {
-    const isLoading = useSelector(getQualitiesLoadingStatus())
+    const isLoading = useSelector(getQualitiesLoadingStatus()) // actions и selectors для Qualities
     if (isLoading) return 'Loading...'
     const qualitiesList = useSelector(getQualitiesByIds(qualities))
 

@@ -9,15 +9,18 @@ import BackHistoryButton from '../../common/backButton'
 import { useAuth } from '../../../hooks/useAuth'
 import { useProfessions } from '../../../hooks/useProfession'
 import { useSelector } from 'react-redux'
-import { getQualities, getQualitiesLoadingStatus } from '../../../store/qualities'
+import {
+    getQualities,
+    getQualitiesLoadingStatus
+} from '../../../store/qualities'
 
 const EditUserPage = () => {
     const history = useHistory()
     const [isLoading, setIsLoading] = useState(true)
     const [data, setData] = useState()
     const { currentUser, updateUserData } = useAuth()
-    const qualities = useSelector(getQualities())
-    const qualitiesLoading = useSelector(getQualitiesLoadingStatus())
+    const qualities = useSelector(getQualities()) // actions и selectors для Qualities
+    const qualitiesLoading = useSelector(getQualitiesLoadingStatus()) // actions и selectors для Qualities
     const { professions, isLoading: professionLoading } = useProfessions()
     const [errors, setErrors] = useState({})
     const qualitiesList = qualities.map((q) => ({
@@ -33,7 +36,10 @@ const EditUserPage = () => {
         e.preventDefault()
         const isValid = validate()
         if (!isValid) return
-        await updateUserData({ ...data, qualities: data.qualities.map((q) => q.value) })
+        await updateUserData({
+            ...data,
+            qualities: data.qualities.map((q) => q.value)
+        })
         history.push(`/users/${currentUser._id}`)
     }
     function getQualitiesListByIds(qualitiesIds) {
@@ -60,7 +66,8 @@ const EditUserPage = () => {
     useEffect(() => {
         if (!professionLoading && !qualitiesLoading && currentUser && !data) {
             setData({
-                ...currentUser, qualities: transformData(currentUser.qualities)
+                ...currentUser,
+                qualities: transformData(currentUser.qualities)
             })
         }
     }, [professionLoading, qualitiesLoading, currentUser, data])
