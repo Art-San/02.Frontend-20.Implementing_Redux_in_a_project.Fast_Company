@@ -22,6 +22,7 @@ const commentsSlice = createSlice({
             state.error = action.payload
             state.isLoading = false
         },
+        // Добавление коментария
         commentCreated: (state, action) => {
             state.entities.push(action.payload)
         }
@@ -29,8 +30,13 @@ const commentsSlice = createSlice({
 })
 
 const { actions, reducer: commentsReducer } = commentsSlice
-const { commentsRequested, commentsReceved, commentsRequestFiled, commentCreated } = actions
-const addCommentRequested = createAction('comments/addCommentRequested')
+const {
+    commentsRequested,
+    commentsReceved,
+    commentsRequestFiled,
+    commentCreated
+} = actions
+const addCommentRequested = createAction('comments/addCommentRequested') // Добавление коментария
 
 export const loadCommentsList = (userId) => async (dispatch) => {
     dispatch(commentsRequested())
@@ -41,6 +47,7 @@ export const loadCommentsList = (userId) => async (dispatch) => {
         dispatch(commentsRequestFiled(error.message))
     }
 }
+// Добавление коментария
 export const createComment = (payload) => async (dispatch, getState) => {
     dispatch(addCommentRequested(payload))
     const comment = {
