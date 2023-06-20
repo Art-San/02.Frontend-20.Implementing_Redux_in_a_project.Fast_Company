@@ -8,7 +8,7 @@ const rootReducer = combineReducers({
     qualities: qualitiesReducer,
     professions: professionsReducer,
     users: usersReducer,
-    comments: commentsReducer
+    comments: commentsReducer // Создаем Comments Slice
 })
 
 export function createStore() {

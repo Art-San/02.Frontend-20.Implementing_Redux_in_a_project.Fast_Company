@@ -3,18 +3,22 @@ import React, { useEffect } from 'react'
 import CommentsList, { AddCommentForm } from '../common/comments'
 import { useComments } from '../../hooks/useComments'
 import { useDispatch, useSelector } from 'react-redux'
-import { getComments, getCommentsLoadingStatus, loadCommentsList } from '../../store/comments'
+import {
+    getComments,
+    getCommentsLoadingStatus,
+    loadCommentsList
+} from '../../store/comments'
 import { useParams } from 'react-router-dom'
 
 const Comments = () => {
     const { userId } = useParams()
-    const dispatch = useDispatch()
+    const dispatch = useDispatch() // Создаем Comments Slice
     useEffect(() => {
         dispatch(loadCommentsList(userId))
     }, [userId])
-    const isLoading = useSelector(getCommentsLoadingStatus())
+    const isLoading = useSelector(getCommentsLoadingStatus()) // Создаем Comments Slice
     const { createComment, removeComment } = useComments()
-    const comments = useSelector(getComments())
+    const comments = useSelector(getComments()) // Создаем Comments Slice
     const handleSubmit = (data) => {
         createComment(data)
     }
@@ -34,14 +38,14 @@ const Comments = () => {
                     <div className="card-body ">
                         <h2>Comments</h2>
                         <hr />
-                        {!isLoading ? (
+                        {!isLoading ? ( // Создаем Comments Slice
                             <CommentsList
                                 comments={sortedComments}
-                                onRemove={handleRemoveComment}/>
+                                onRemove={handleRemoveComment}
+                            />
                         ) : (
                             'Loading...'
                         )}
-
                     </div>
                 </div>
             )}

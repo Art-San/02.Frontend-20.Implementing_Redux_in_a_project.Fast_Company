@@ -1,3 +1,4 @@
+// Создаем Comments Slice
 import { createSlice } from '@reduxjs/toolkit'
 import commentService from '../services/comment.service'
 
