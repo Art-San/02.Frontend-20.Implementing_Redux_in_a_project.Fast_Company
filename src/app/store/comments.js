@@ -25,11 +25,12 @@ const commentsSlice = createSlice({
         commentCreated: (state, action) => {
             state.entities.push(action.payload)
         },
+        // Удаление коментария
         commentRemoved: (state, action) => {
             state.entities = state.entities.filter(
-                (c) => c._id !== action.payload)
+                (c) => c._id !== action.payload
+            )
         }
-
     }
 })
 
@@ -43,7 +44,7 @@ const {
 } = actions
 
 const addCommentRequested = createAction('comments/addCommentRequested')
-const removeCommentRequested = createAction('comments/removeCommentRequested')
+const removeCommentRequested = createAction('comments/removeCommentRequested') // Удаление коментария
 
 export const loadCommentsList = (userId) => async (dispatch) => {
     dispatch(commentsRequested())
@@ -69,6 +70,7 @@ export const createComment = (payload) => async (dispatch, getState) => {
         dispatch(commentsRequestFiled(error.message))
     }
 }
+// Удаление коментария
 export const removeComment = (commentId) => async (dispatch) => {
     dispatch(removeCommentRequested())
     try {
