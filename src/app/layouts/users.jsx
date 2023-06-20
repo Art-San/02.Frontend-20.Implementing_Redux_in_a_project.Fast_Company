@@ -10,18 +10,21 @@ import { getCurrentUserId } from '../store/users'
 const Users = () => {
     const params = useParams()
     const { userId, edit } = params
-    const currentUserUserId = useSelector(getCurrentUserId())
+    const currentUserUserId = useSelector(getCurrentUserId()) // HOC. Загрузчики
 
     return (
         <>
-            <UsersLoader>
+            <UsersLoader // HOC. Загрузчики
+            >
                 <UserProvider>
                     {userId ? (
                         edit ? (
                             userId === currentUserUserId ? (
                                 <EditUserPage />
                             ) : (
-                                <Redirect to={`/users/${currentUserUserId}/edit`} />
+                                <Redirect
+                                    to={`/users/${currentUserUserId}/edit`}
+                                />
                             )
                         ) : (
                             <UserPage userId={userId} />

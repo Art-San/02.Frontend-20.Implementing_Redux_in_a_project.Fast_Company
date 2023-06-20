@@ -1,7 +1,12 @@
+// HOC. Загрузчики
 import { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
-import { getIsLoggedIn, getUsersLoadingStatus, loadUsersList } from '../../../store/users'
+import {
+    getIsLoggedIn,
+    getUsersLoadingStatus,
+    loadUsersList
+} from '../../../store/users'
 import { loadQualitiesList } from '../../../store/qualities'
 import { loadProfessionsList } from '../../../store/professions'
 

@@ -14,7 +14,8 @@ import AppLoader from './components/ui/hoc/appLoader'
 function App() {
     return (
         <div>
-            <AppLoader>
+            <AppLoader // HOC. Загрузчики
+            >
                 <AuthProvider>
                     <NavBar />
                     <QualitiesProvider>
