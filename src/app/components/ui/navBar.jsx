@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { getIsLoggedIn } from '../../store/users'
 import NavProfile from './navProfile'
 const NavBar = () => {
-    const isLoggedIn = useSelector(getIsLoggedIn())
+    const isLoggedIn = useSelector(getIsLoggedIn()) // Удаляем Auth и User Context
     return (
         <nav className="navbar bg-light mb-3">
             <div className="container-fluid">

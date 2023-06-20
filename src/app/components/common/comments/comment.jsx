@@ -10,7 +10,7 @@ const Comment = ({
     userId,
     onRemove
 }) => {
-    const currentUserId = useSelector(getCurrentUserId())
+    const currentUserId = useSelector(getCurrentUserId()) // Удаляем Auth и User Context
     const user = useSelector(getUserById(userId))
 
     return (

@@ -8,8 +8,14 @@ import MultiSelectField from '../../common/form/multiSelectField'
 import BackHistoryButton from '../../common/backButton'
 import { useAuth } from '../../../hooks/useAuth'
 import { useSelector } from 'react-redux'
-import { getQualities, getQualitiesLoadingStatus } from '../../../store/qualities'
-import { getProfessions, getProfessionsLoadingStatus } from '../../../store/professions'
+import {
+    getQualities,
+    getQualitiesLoadingStatus
+} from '../../../store/qualities'
+import {
+    getProfessions,
+    getProfessionsLoadingStatus
+} from '../../../store/professions'
 import { getCurrentUserData } from '../../../store/users'
 
 const EditUserPage = () => {
@@ -17,10 +23,10 @@ const EditUserPage = () => {
     const [isLoading, setIsLoading] = useState(true)
     const [data, setData] = useState()
     const { updateUserData } = useAuth()
-    const currentUser = useSelector(getCurrentUserData())
+    const currentUser = useSelector(getCurrentUserData()) // Удаляем Auth и User Context
     const qualities = useSelector(getQualities())
     const qualitiesLoading = useSelector(getQualitiesLoadingStatus())
-    const professions = useSelector((getProfessions()))
+    const professions = useSelector(getProfessions())
     const professionLoading = useSelector(getProfessionsLoadingStatus())
     const [errors, setErrors] = useState({})
     const qualitiesList = qualities.map((q) => ({
@@ -36,7 +42,10 @@ const EditUserPage = () => {
         e.preventDefault()
         const isValid = validate()
         if (!isValid) return
-        await updateUserData({ ...data, qualities: data.qualities.map((q) => q.value) })
+        await updateUserData({
+            ...data,
+            qualities: data.qualities.map((q) => q.value)
+        })
         history.push(`/users/${currentUser._id}`)
     }
     function getQualitiesListByIds(qualitiesIds) {
@@ -63,7 +72,8 @@ const EditUserPage = () => {
     useEffect(() => {
         if (!professionLoading && !qualitiesLoading && currentUser && !data) {
             setData({
-                ...currentUser, qualities: transformData(currentUser.qualities)
+                ...currentUser,
+                qualities: transformData(currentUser.qualities)
             })
         }
     }, [professionLoading, qualitiesLoading, currentUser, data])

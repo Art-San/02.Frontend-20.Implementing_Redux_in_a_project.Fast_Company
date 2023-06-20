@@ -3,12 +3,12 @@ import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { getCurrentUserData } from '../../store/users'
 function NavProfile() {
-    const currentUser = useSelector(getCurrentUserData())
+    const currentUser = useSelector(getCurrentUserData()) // Удаляем Auth и User Context
     const [isOpen, setOpen] = useState(false)
     const toggleMenu = () => {
         setOpen((prevState) => !prevState)
     }
-    if (!currentUser) return 'Loading'
+    if (!currentUser) return 'Loading' // Удаляем Auth и User Context
     return (
         <div className="dropdown" onClick={toggleMenu}>
             <div className="btn dropdown-toggle d-flex align-items-center">
