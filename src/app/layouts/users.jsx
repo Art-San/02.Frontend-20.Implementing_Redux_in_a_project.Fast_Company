@@ -11,9 +11,10 @@ const Users = () => {
     const params = useParams()
     const { userId, edit } = params
     const { currentUser } = useAuth()
-    const dataStatus = useSelector(getDataStatus())
+    const dataStatus = useSelector(getDataStatus()) // Загружаем данные о пользователях
     const dispatch = useDispatch()
     useEffect(() => {
+        // Загружаем данные о пользователях
         if (!dataStatus) dispatch(loadUsersList())
     }, [])
     if (!dataStatus) return 'Loading'
