@@ -5,21 +5,23 @@ import userService from '../services/user.service'
 import getRandomInt from '../utils/getRandomInt'
 import history from '../utils/history'
 
-const initialState = localStorageService.getAccessToken() ? {
-    entities: null,
-    isLoading: true,
-    error: null,
-    auth: { userId: localStorageService.getUserId() },
-    isLoggedIn: true,
-    dataLoaded: false
-} : {
-    entities: null,
-    isLoading: false,
-    error: null,
-    auth: null,
-    isLoggedIn: false,
-    dataLoaded: false
-}
+const initialState = localStorageService.getAccessToken()
+    ? {
+          entities: null,
+          isLoading: true,
+          error: null,
+          auth: { userId: localStorageService.getUserId() },
+          isLoggedIn: true,
+          dataLoaded: false
+      }
+    : {
+          entities: null,
+          isLoading: false,
+          error: null,
+          auth: null,
+          isLoggedIn: false,
+          dataLoaded: false
+      }
 const usersSlice = createSlice({
     name: 'users',
     initialState,
@@ -55,14 +57,13 @@ const usersSlice = createSlice({
             state.auth = null
             state.dataLoaded = false
         },
+        // Изменение пользователя
         userUpdateSuccessed: (state, action) => {
             state.entities[
                 state.entities.findIndex((u) => u._id === action.payload._id)
             ] = action.payload
         }
-
     }
-
 })
 
 const { actions, reducer: usersReducer } = usersSlice
@@ -80,31 +81,34 @@ const {
 const authRequested = createAction('users/authRequested')
 const userCreateRequested = createAction('users/userCreateRequested')
 const createUserFailed = createAction('users/userCreateRequested')
-const userUpdateFailed = createAction('user/userUpdateFailed')
-const userUpdatedRequsted = createAction('users/userUpdatedRequsted')
+const userUpdateFailed = createAction('user/userUpdateFailed') // Изменение пользователя
+const userUpdatedRequsted = createAction('users/userUpdatedRequsted') // Изменение пользователя
 
-export const logIn = ({ payload, redirect }) => async (dispatch) => {
-    const { email, password } = payload
-    dispatch(authRequested())
-    try {
-        const data = await authService.logIn({ email, password })
-        dispatch(authRequestSuccess({ userId: data.localId }))
-        localStorageService.setTokens(data)
-        history.push(redirect)
-    } catch (error) {
-        dispatch(authRequestFailed(error.message))
+export const logIn =
+    ({ payload, redirect }) =>
+    async (dispatch) => {
+        const { email, password } = payload
+        dispatch(authRequested())
+        try {
+            const data = await authService.logIn({ email, password })
+            dispatch(authRequestSuccess({ userId: data.localId }))
+            localStorageService.setTokens(data)
+            history.push(redirect)
+        } catch (error) {
+            dispatch(authRequestFailed(error.message))
+        }
     }
-}
 
 export const signUp =
     ({ email, password, ...rest }) =>
-        async (dispatch) => {
-            dispatch(authRequested())
-            try {
-                const data = await authService.register({ email, password })
-                localStorageService.setTokens(data)
-                dispatch(authRequestSuccess({ userId: data.localId }))
-                dispatch(createUser({
+    async (dispatch) => {
+        dispatch(authRequested())
+        try {
+            const data = await authService.register({ email, password })
+            localStorageService.setTokens(data)
+            dispatch(authRequestSuccess({ userId: data.localId }))
+            dispatch(
+                createUser({
                     _id: data.localId,
                     email,
                     rate: getRandomInt(1, 5),
@@ -115,11 +119,12 @@ export const signUp =
                         .toString(36)
                         .substring(7)}.svg`,
                     ...rest
-                }))
-            } catch (error) {
-                dispatch(authRequestFailed(error.message))
-            }
+                })
+            )
+        } catch (error) {
+            dispatch(authRequestFailed(error.message))
         }
+    }
 
 export const logOut = () => (dispatch) => {
     localStorageService.removeAuthData()
@@ -149,7 +154,7 @@ export const loadUsersList = () => async (dispatch, getState) => {
         dispatch(usersRequestFiled(error.message))
     }
 }
-
+// Изменение пользователя
 export const updateUser = (payload) => async (dispatch) => {
     dispatch(userUpdatedRequsted())
     try {
@@ -169,7 +174,7 @@ export const getCurrentUserData = () => (state) => {
 }
 export const getUserById = (userId) => (state) => {
     if (state.users.entities) {
-        return state.users.entities.find(u => u._id === userId)
+        return state.users.entities.find((u) => u._id === userId)
     }
 }
 

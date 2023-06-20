@@ -6,8 +6,14 @@ import RadioField from '../../common/form/radioField'
 import MultiSelectField from '../../common/form/multiSelectField'
 import BackHistoryButton from '../../common/backButton'
 import { useSelector, useDispatch } from 'react-redux'
-import { getQualities, getQualitiesLoadingStatus } from '../../../store/qualities'
-import { getProfessions, getProfessionsLoadingStatus } from '../../../store/professions'
+import {
+    getQualities,
+    getQualitiesLoadingStatus
+} from '../../../store/qualities'
+import {
+    getProfessions,
+    getProfessionsLoadingStatus
+} from '../../../store/professions'
 import { getCurrentUserData, updateUser } from '../../../store/users'
 
 const EditUserPage = () => {
@@ -17,7 +23,7 @@ const EditUserPage = () => {
     const currentUser = useSelector(getCurrentUserData())
     const qualities = useSelector(getQualities())
     const qualitiesLoading = useSelector(getQualitiesLoadingStatus())
-    const professions = useSelector((getProfessions()))
+    const professions = useSelector(getProfessions())
     const professionLoading = useSelector(getProfessionsLoadingStatus())
     const [errors, setErrors] = useState({})
     const qualitiesList = qualities.map((q) => ({
@@ -33,10 +39,13 @@ const EditUserPage = () => {
         e.preventDefault()
         const isValid = validate()
         if (!isValid) return
-        dispatch(updateUser({
-            ...data,
-            qualities: data.qualities.map((q) => q.value)
-        }))
+        dispatch(
+            updateUser({
+                // Изменение пользователя
+                ...data,
+                qualities: data.qualities.map((q) => q.value)
+            })
+        )
     }
     function getQualitiesListByIds(qualitiesIds) {
         const qualitiesArray = []
@@ -62,7 +71,8 @@ const EditUserPage = () => {
     useEffect(() => {
         if (!professionLoading && !qualitiesLoading && currentUser && !data) {
             setData({
-                ...currentUser, qualities: transformData(currentUser.qualities)
+                ...currentUser,
+                qualities: transformData(currentUser.qualities)
             })
         }
     }, [professionLoading, qualitiesLoading, currentUser, data])
