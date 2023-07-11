@@ -8,7 +8,7 @@ import NavBar from './components/ui/navBar'
 import ProtectedRoute from './components/common/protectedRoute'
 import LogOut from './layouts/logOut'
 import AppLoader from './components/ui/hoc/appLoader'
-// заключение
+// заключение 11/07/23
 function App() {
     return (
         <div>
